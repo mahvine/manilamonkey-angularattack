@@ -1,0 +1,179 @@
+<html ng-app="socialmonkeys">
+  <head>
+    <base href="/">
+    <title>Love your Monkey</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- 1. Load libraries -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Mono&subset=latin" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="bower_components/material-design-lite/material.min.css">
+    <link href="app2/assets/css/floatingheart.css" rel="stylesheet">
+    <link href="app2/assets/css/styles.css" rel="stylesheet">
+    <link href="app2/assets/css/app.component.css" rel="stylesheet">
+    <link href="app2/assets/css/login.component.css" rel="stylesheet">
+    <link href="app2/assets/css/monkeys.component.css" rel="stylesheet">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js" ></script>
+    <script src="bower_components/material-design-lite/material.min.js" ></script>
+    <meta name="google-signin-client_id" content="74800350009-9ibltem0ta6ab18u7jbgfhidh0sggc65.apps.googleusercontent.com"></meta>
+    <script src="bower_components/angular/angular.min.js" ></script>
+    <script src="bower_components/angular-animate/angular-animate.min.js" ></script>
+    <script src="bower_components/angular-ui-router/release/angular-ui-router.min.js" ></script>
+    <script src="bower_components/angular-local-storage/dist/angular-local-storage.min.js" ></script>
+    <script src="app2/assets/common/storage.js"></script>
+    <script src="app2/assets/common/angular-material-design-lite.js"></script>
+    <script src="app2/scripts/app.js" ></script>
+    <script src="app2/scripts/monkey/monkey.controller.js" ></script>
+    <script src="app2/scripts/monkey/monkey.routes.js" ></script>
+    <script src="app2/scripts/badges/badges.controller.js" ></script>
+    <script src="app2/scripts/badges/badges.routes.js" ></script>
+    <script src="app2/scripts/bananas/bananas.controller.js" ></script>
+    <script src="app2/scripts/bananas/bananas.routes.js" ></script>
+
+  </head>
+  <body ng-controller="MainController">
+    <nav class="drawer" ng-class="{'show':visibleMenu==true}"  ng-click="hideMenu()">
+      <img id="logo" src="/assets/socialmonkey_logo.png">
+      <a ui-sref="monkeys">My Monkeys</a>
+      <a ui-sref="badges">Badges</a>
+      <a ui-sref="bananas">Bananas</a>
+      <a ng-click="signOut()">Sign out</a>
+    </nav>
+    <button class="left orange" ng-class="{'show':visibleMenu==true}"  ng-show="user" ng-click="clickMenu()"><i class="material-icons">menu</i></button>
+    <header class="orange" ng-click="hideMenu()">
+      <a class="logo">Love your Monkey(s)</a>
+      <div class="heart-separator"></div>
+    </header>
+    <span class="right heart" ng-show="user"> <span ng-bind="user.love|number:0"></span> <i class="material-icons"> favorite</i> </span>
+    <main ui-view>
+      Loading...
+    </main>
+    <script type="text/javascript">
+var auth2 = {};
+var helper = (function() {
+  return {
+    /**
+     * Hides the sign in button and starts the post-authorization operations.
+     *
+     * @param {Object} authResult An Object which contains the access token and
+     *   other authentication information.
+     */
+    onSignInCallback: function(authResult) {
+      $('#authResult').html('Auth Result:<br/>');
+      for (var field in authResult) {
+        $('#authResult').append(' ' + field + ': ' +
+            authResult[field] + '<br/>');
+      }
+      if (authResult.isSignedIn.get()) {
+        $('#gConnect').hide();
+        helper.profile();
+        helper.people();
+      } else {
+          if (authResult['error'] || authResult.currentUser.get().getAuthResponse() == null) {
+            // There was an error, which means the user is not signed in.
+            // As an example, you can handle by writing to the console:
+            console.log('There was an error: ' + authResult['error']);
+          }
+
+      }
+      console.log('authResult', authResult);
+    },
+    /**
+     * Calls the OAuth2 endpoint to disconnect the app for the user.
+     */
+    disconnect: function() {
+      // Revoke the access token.
+      auth2.disconnect();
+    },
+    /**
+     * Gets and renders the list of people visible to this app.
+     */
+    people: function() {
+      gapi.client.plus.people.list({
+        'userId': 'me',
+        'collection': 'visible'
+      }).then(function(res) {
+        var people = res.result;
+        window.peopleCallback(people);
+        for (var personIndex in people.items) {
+          person = people.items[personIndex];
+          $('#visiblePeople').append('<img src="' + person.image.url + '">');
+        }
+      });
+    },
+    /**
+     * Gets and renders the currently signed in user's profile data.
+     */
+    profile: function(){
+      gapi.client.plus.people.get({
+        'userId': 'me'
+      }).then(function(res) {
+        var profile = res.result;
+        console.log(profile);
+        window.profileCallback(profile);
+      }, function(err) {
+        var error = err.result;
+      });
+    }
+  };
+})();
+/**
+ * jQuery initialization
+ */
+$(document).ready(function() {
+  $('#disconnect').click(helper.disconnect);
+  $('#loaderror').hide();
+  if ($('meta')[0].content == 'YOUR_CLIENT_ID') {
+    alert('This sample requires your OAuth credentials (client ID) ' +
+        'from the Google APIs console:\n' +
+        '    https://code.google.com/apis/console/#:access\n\n' +
+        'Find and replace YOUR_CLIENT_ID with your client ID.'
+    );
+  }
+});
+/**
+ * Handler for when the sign-in state changes.
+ *
+ * @param {boolean} isSignedIn The new signed in state.
+ */
+var updateSignIn = function() {
+  console.log('update sign in state');
+  if (auth2.isSignedIn.get()) {
+    console.log('signed in');
+    helper.onSignInCallback(gapi.auth2.getAuthInstance());
+  }else{
+    console.log('signed out');
+    helper.onSignInCallback(gapi.auth2.getAuthInstance());
+  }
+}
+/**
+ * This method sets up the sign-in listener after the client library loads.
+ */
+function startApp() {
+  gapi.load('auth2', function() {
+    gapi.client.load('plus','v1').then(function() {
+      gapi.signin2.render('signin-button', {
+          scope: 'https://www.googleapis.com/auth/plus.login',
+          fetch_basic_profile: false });
+      gapi.auth2.init({fetch_basic_profile: false,
+          scope:'https://www.googleapis.com/auth/plus.login'}).then(
+            function (){
+              console.log('init');
+              auth2 = gapi.auth2.getAuthInstance();
+              auth2.isSignedIn.listen(updateSignIn);
+              auth2.then(updateSignIn);
+            });
+    });
+  });
+}
+function signOut(){
+  console.log("signout window");
+  auth2.signOut();
+  location.href="/#/login";
+}
+</script>
+    <script src="https://apis.google.com/js/client:platform.js?onload=startApp"></script>
+  </body>
+</html>

@@ -1,0 +1,304 @@
+*, :after, :before {
+    box-sizing: border-box;
+}
+
+.box:hover {
+    box-shadow: 0 10px 16px rgba(0,0,0,.13),0 6px 6px rgba(0,0,0,.19);
+}
+
+
+.box {
+    animation: flyintotop .4s backwards;
+    position: relative;
+    display: inline-block;
+    width: 274px;
+    height: 270px;
+    background: #fff;
+    margin: 10px;
+    box-shadow: rgba(0,0,0,.1) 0 1px 0;
+    transition: all .2s ease-in-out;
+}
+
+.box.badge {
+  border-radius:2%;
+  background:#353535;
+}
+
+.box > .disabled{
+    opacity: 0.4;
+    filter: alpha(opacity=40); /* msie */
+    background-color: #000;
+}
+
+.box > .disabled > img{
+    -webkit-filter: grayscale(100%);
+       -moz-filter: grayscale(100%);
+         -o-filter: grayscale(100%);
+        -ms-filter: grayscale(100%);
+            filter: grayscale(100%);
+}
+
+/**for random popping of cards**/
+.box:nth-child(0){
+  animation-delay:.74s
+}
+.box:nth-child(1){
+  animation-delay:.37s
+}
+.box:nth-child(2){
+  animation-delay:.45s
+}
+.box:nth-child(3){
+  animation-delay:.7s
+}
+.box:nth-child(4){
+  animation-delay:.35s
+}
+.box:nth-child(6){
+  animation-delay:.9s
+}
+.box:nth-child(7){
+  animation-delay:.72s
+}
+.box:nth-child(8){
+  animation-delay:.31s
+}
+.box:nth-child(9){
+  animation-delay:.42s
+}
+
+
+.box.showaction{
+  -webkit-transform: translate(-200%, -200%);
+          transform: translate(-200%, -200%);
+  -webkit-transition-delay: 2s;
+          transition-delay: 2s;
+  -webkit-transition: all 400ms cubic-bezier(0.165, 0.84, 0.44, 1);
+  transition: all 400ms cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.img-container{
+    height: 12em;
+    width: 17em;
+    position: absolute;
+    margin: 10px auto;
+    text-align: center;
+}
+.realpic{
+  height:20px;
+  width:20px;
+  float:right;
+}
+
+.img-container img{
+    height:100%;
+}
+
+.name {
+    background-color: #fafafa;
+    color: gray;
+    padding: 1.3em;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+/** POKEDEX.ORG Inspired design **/
+#monkey-view, .monkey-view-bg, .monkey-view-fg{
+    position: absolute;
+    bottom: 0;
+}
+
+
+#monkey-view-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height:100vh;
+    z-index: 15;
+    transition: all .2s ease-in-out;
+
+    -webkit-transform: translate(0%, 0%);
+            transform: translate(0%, 0%);
+    -webkit-transition-delay: 3s;
+            transition-delay: 3s;
+    -webkit-transition: all 400ms cubic-bezier(0.165, 0.84, 0.44, 1);
+    transition: all 400ms cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+#monkey-view-container.hide{
+  -webkit-transform: translate(-200%, -200%);
+          transform: translate(-200%, -200%);
+  -webkit-transition-delay: 3s;
+          transition-delay: 3s;
+  -webkit-transition: all 400ms cubic-bezier(0.165, 0.84, 0.44, 1);
+  transition: all 400ms cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+
+#monkey-view {
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 20;
+    color: #333;
+}
+
+
+.monkey-view-bg {
+    transform-origin: 0 0;
+    background-color:#f08030;
+}
+
+.monkey-view-bg {
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 20;
+}
+
+.monkey-view-fg {
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 30;
+}
+
+.back-button {
+    height: 30px;
+    width: 30px;
+    border: none;
+    margin: 10px;
+    color: #fff;
+    text-align: center;
+    background-color:#f08030;
+    top:8px;
+    left: 10px;
+    position:absolute;
+}
+.back-button i{
+  padding: 5px 5px;
+}
+
+.back-button:hover i{
+    opacity: .5;
+    background-color: rgba(0,0,0,.27);
+    border-radius: 50%;
+}
+
+.mui-panel{
+  background-color: #FFF;
+}
+
+.mui-panel.monkey-panel {
+    max-width: 600px;
+    margin: 58px auto 10px;
+    padding: 0;
+    top: 0;
+    left: 10px;
+    right: 10px;
+    overflow-y: auto;
+}
+
+.monkey-panel-header {
+    max-width: 600px;
+    margin: 0 auto;
+    color: #fff;
+    text-align: center;
+    padding: 15px;
+    font-size: 24px;
+}
+.monkey-panel-content{
+  text-align: center;
+}
+
+.monkey-panel-content > img{
+  height: 10em;
+  margin: 5em;
+}
+
+.monkey-action-container{
+  margin:10px;
+}
+.monkey-action{
+  height:70px;
+  width:70px;
+}
+
+.monkey-action:hover{
+      -webkit-transform: translate(0%, -4%);
+              transform: translate(0%, -4%);
+      -webkit-transition-delay: 3s;
+              transition-delay: 3s;
+      -webkit-transition: all 400ms cubic-bezier(0.165, 0.84, 0.44, 1);
+      transition: all 400ms cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+
+.monkey-action:active{
+      -webkit-transform: translate(0%, 2%);
+              transform: translate(0%, 2%);
+      -webkit-transition-delay: 1s;
+              transition-delay: 1s;
+      -webkit-transition: all 400ms cubic-bezier(0.165, 0.84, 0.44, 1);
+      transition: all 400ms cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+
+img.animation-banana {
+
+  -webkit-animation: banana 1s linear infinite ;
+   -moz-animation: banana 1s linear infinite ;
+    -ms-animation: banana 1s linear infinite ;
+     -o-animation: banana 1s linear infinite ;
+        animation: banana 1s linear infinite ;
+}
+
+
+img.animation-scratch {
+  -webkit-animation: tilthead 2s linear infinite ;
+   -moz-animation: tilthead 2s linear infinite ;
+    -ms-animation: tilthead 2s linear infinite ;
+     -o-animation: tilthead 2s linear infinite ;
+        animation: tilthead 2s linear infinite ;
+}
+
+
+img.animation-pet {
+  -webkit-animation: slidetoslide 2s linear infinite ;
+   -moz-animation: slidetoslide 2s linear infinite ;
+    -ms-animation: slidetoslide 2s linear infinite ;
+     -o-animation: slidetoslide 2s linear infinite ;
+        animation: slidetoslide 2s linear infinite ;
+}
+
+img.animation-spank {
+  -webkit-animation: spankanim 2s infinite ease;
+  -moz-animation: spankanim 2s infinite ease;
+  -o-animation: spankanim 2s infinite ease;
+}
+
+
+.classname {
+}
+
+img.big-heart{
+  position:absolute;
+  top:100%;right:50%;
+  z-index:0;
+  height:200px;
+  width:200px;
+  margin:-100px -100px;
+  opacity:0;
+}
+
+img.big-heart.give{
+  -webkit-animation: giveheart 2s linear infinite;
+   -moz-animation: giveheart 2s linear infinite;
+    -ms-animation: giveheart 2s linear infinite;
+     -o-animation: giveheart 2s linear infinite;
+        animation: giveheart 2s linear infinite;
+}

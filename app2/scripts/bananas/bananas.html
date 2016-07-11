@@ -1,0 +1,15 @@
+<div class="box" ng-repeat="banana in bananas">
+  <div class="img-container">
+    <img ng-src="{{banana.pic}}">
+  </div>
+  <div id="{{banana.id}}" class="name">{{banana.name}}
+    <button style="float:right;" class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored" ng-hide="bananasOwned[banana.id]" ng-click="buyBanana(banana)">
+      <i class="material-icons">shopping_cart</i>
+    </button>
+  </div>
+  <div class="mdl-tooltip mdl-tooltip--large mdl-tooltip--top" mdl-upgrade for="{{banana.id}}">
+    <span  ng-hide="bananasOwned[banana.id]">Price: {{banana.price|number:0}} <i class="material-icons">favorite_border</i></span>
+    <span  ng-show="bananasOwned[banana.id]">OWNED</span><br><br>
+    {{banana.description}}
+  </div>
+</div>
